@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>To Do List</title>
+	<div ALIGN=LEFT>
+    <h1><img src='http://localhost:5000/static/todoapp.gif' height="300" width="360"></h1>
+	</div>
+    <style>
+    #main{}
+      body {font-family: "Times New Roman", Times, serif;}
+      table {width: 50%;}
+      table, td, th {border: 2px solid black;}
+      th {background-color: DarkGray;
+          color: #000000;
+          font-family: "Times New Roman", Times, serif;
+          text-align: center;}
+      td {background-color: #FFFFFF;
+          color: #000000;
+          font-family: "Times New Roman", Times, serif;}
+    </style>
+  </head>
+
+  <body>
+  <div id="main">
+      <div class="column">
+        <span>Please enter a task to be added to the "To Do List".</span><br><br>
+        <form action="/submit" method="post">
+        <b>Task:</b><br>
+		<input type="text" name="task"><br>
+        <br>
+		<b>Email:</b><br>
+		<input type="text" name="email"><br>
+        <br>
+        <b>Priority:</b><br>
+		<select type="select" name="priority">
+        <option value="select">Please select a priority.</option>
+        <option value="Low">Low</option>
+        <option value="Medium">Medium</option>
+        <option value="High">High</option>
+		</select><br>
+		<br>
+        <input type="submit" value="Submit">
+		<br>
+		<br>
+    </form>
+          <font color="blue">{{status}}</font>
+      </div>
+
+      <div class="column1"><table>
+      <tr>
+          <th style="width:35%">Task</th>
+          <th style="width:35%">Email</th>
+          <th style="width:15%">Priority</th>
+          <th style="width:15">Action</th>
+      </tr>
+        {% for task in todoapp %}
+            <tr>
+                <td>{{task.task}}</td>
+                <td>{{task.email}}</td>
+                <td>{{task.priority}}</td>
+                <td valign="center" align="center">
+                  <br>
+				  <form action="/delete" method="post">
+                    <input type="submit" value="Delete">
+                    <input type="hidden" name="index" value="{{ loop.index0 }}">
+                  </form><br>
+                    <form action="/save" method="post">
+                    <input type="submit" value="Save">
+                    <input type="hidden" name="index" value="{{ loop.index0 }}">
+                  </form><br>
+                </td>
+            </tr>
+        {% endfor %}
+    </table><br>
+
+    <form action="/clear" method="post">
+        <input type="submit" value="Clear">
+    </form><br>
+
+      </div>
+  </div>
+  </body>
+</html>
